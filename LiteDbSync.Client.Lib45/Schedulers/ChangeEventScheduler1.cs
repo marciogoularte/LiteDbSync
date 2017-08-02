@@ -5,17 +5,20 @@ namespace LiteDbSync.Client.Lib45.Schedulers
 {
     public class ChangeEventScheduler1
     {
-        private ILdbFileWatcher     _watchr;
-        private IChangeSender       _sendr;
-        private int                 _minIntrvlMS;
-        private DateTime            _lastSend;
+        private ILdbFileWatcher _watchr;
+        private IChangeSender   _sendr;
+        private ILocalDbReader  _readr;
+        private int             _minIntrvlMS;
+        private DateTime        _lastSend;
 
 
         public ChangeEventScheduler1(ILdbFileWatcher ldbFileWatcher,
-                                     IChangeSender changeSender)
+                                     IChangeSender changeSender,
+                                     ILocalDbReader localDbReader)
         {
             _watchr = ldbFileWatcher;
             _sendr  = changeSender;
+            _readr  = localDbReader;
         }
 
 
@@ -32,7 +35,8 @@ namespace LiteDbSync.Client.Lib45.Schedulers
         {
             if (IsTooSoon()) return;
 
-            _sendr.SendLatestId(123);
+            var latestId = _readr.GetLatestId();
+            _sendr.SendLatestId(latestId);
             _lastSend = DateTime.Now;
         }
 
