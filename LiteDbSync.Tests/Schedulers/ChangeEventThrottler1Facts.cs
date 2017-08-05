@@ -9,12 +9,12 @@ using Xunit;
 namespace LiteDbSync.Tests.Schedulers
 {
     [Trait("ChangeEventScheduler1", "Solitary")]
-    public class ChangeEventScheduler1Facts
+    public class ChangeEventThrottler1Facts
     {
         [Fact(DisplayName = "Calls Post on FileChanged")]
         public void CallsPostonFileChanged()
         {
-            var sut    = New<ChangeEventScheduler1>(out AutoMock moq);
+            var sut    = New<ChangeEventThrottler1>(out AutoMock moq);
             var watchr = moq.Mock<ILdbFileWatcher>();
             var sendr  = moq.Mock<IChangeSender>();
             sut.StartWatching("abc", 1000);
@@ -28,7 +28,7 @@ namespace LiteDbSync.Tests.Schedulers
         [Fact(DisplayName = "Won't Post if below minimum interval")]
         public void WontPostifbelowminimuminterval()
         {
-            var sut    = New<ChangeEventScheduler1>(out AutoMock moq);
+            var sut    = New<ChangeEventThrottler1>(out AutoMock moq);
             var watchr = moq.Mock<ILdbFileWatcher>();
             var sendr  = moq.Mock<IChangeSender>();
             sut.StartWatching("abc", 1000);
@@ -43,7 +43,7 @@ namespace LiteDbSync.Tests.Schedulers
         [Fact(DisplayName = "Waits for interval before next send")]
         public async Task Waitsforintervalbeforenextsend()
         {
-            var sut    = New<ChangeEventScheduler1>(out AutoMock moq);
+            var sut    = New<ChangeEventThrottler1>(out AutoMock moq);
             var watchr = moq.Mock<ILdbFileWatcher>();
             var sendr  = moq.Mock<IChangeSender>();
             sut.StartWatching("abc", 200);
@@ -60,7 +60,7 @@ namespace LiteDbSync.Tests.Schedulers
         }
 
 
-        private T New<T>(out AutoMock moq) where T : ChangeEventScheduler1
+        private T New<T>(out AutoMock moq) where T : ChangeEventThrottler1
         {
             moq = AutoMock.GetLoose();
             return moq.Create<T>();

@@ -3,7 +3,7 @@ using System;
 
 namespace LiteDbSync.Client.Lib45.Schedulers
 {
-    public class ChangeEventScheduler1
+    public class ChangeEventThrottler1
     {
         private ILdbFileWatcher     _watchr;
         private IChangeSender       _sendr;
@@ -11,7 +11,7 @@ namespace LiteDbSync.Client.Lib45.Schedulers
         private DateTime            _lastSend;
 
 
-        public ChangeEventScheduler1(ILdbFileWatcher ldbFileWatcher,
+        public ChangeEventThrottler1(ILdbFileWatcher ldbFileWatcher,
                                      IChangeSender changeSender)
         {
             _watchr = ldbFileWatcher;

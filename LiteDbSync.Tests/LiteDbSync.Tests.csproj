@@ -78,7 +78,7 @@
   <ItemGroup>
     <Compile Include="FileWatchers\LdbFileWatcher1Facts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Schedulers\ChangeEventScheduler1Facts.cs" />
+    <Compile Include="Schedulers\ChangeEventThrottler1Facts.cs" />
     <Compile Include="SutExtensions\LdbFilewatcherExtensions.cs" />
     <Compile Include="SutExtensions\MoqExtensions.cs" />
   </ItemGroup>

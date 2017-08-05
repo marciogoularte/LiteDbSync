@@ -56,7 +56,7 @@
   <ItemGroup>
     <Compile Include="ComponentRegistry.cs" />
     <Compile Include="FileWatchers\LdbFileWatcher1.cs" />
-    <Compile Include="Schedulers\ChangeEventScheduler1.cs" />
+    <Compile Include="Schedulers\ChangeEventThrottler1.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
