@@ -2,6 +2,6 @@
 {
     public interface ILocalDbReader
     {
-        object GetLatestId();
+        ulong GetLatestId();
     }
 }
