@@ -13,8 +13,8 @@ namespace LiteDbSync.Client.Lib45.Schedulers
 
 
         public ChangeEventThrottler1(ILdbFileWatcher ldbFileWatcher,
-                                     IChangeSender changeSender,
-                                     ILocalDbReader localDbReader)
+                                     ILocalDbReader localDbReader,
+                                     IChangeSender changeSender)
         {
             _watchr = ldbFileWatcher;
             _sendr  = changeSender;

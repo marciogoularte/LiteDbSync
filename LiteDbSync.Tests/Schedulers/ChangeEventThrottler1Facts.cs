@@ -8,7 +8,7 @@ using Xunit;
 
 namespace LiteDbSync.Tests.Schedulers
 {
-    [Trait("ChangeEventScheduler1", "Solitary")]
+    [Trait("ChangeEventThrottler1", "Solitary")]
     public class ChangeEventThrottler1Facts
     {
         [Fact(DisplayName = "Calls Post on FileChanged")]

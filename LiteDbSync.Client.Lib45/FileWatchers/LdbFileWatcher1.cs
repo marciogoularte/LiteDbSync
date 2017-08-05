@@ -24,8 +24,8 @@ namespace LiteDbSync.Client.Lib45.FileWatchers
             if (!File.Exists(ldbFilepath))
                 throw new FileNotFoundException($"LDB file not found:{Environment.NewLine}{ldbFilepath}");
 
-            var dir   = Path.GetDirectoryName(ldbFilepath);
-            var nme   = Path.GetFileName(ldbFilepath);
+            var dir = Path.GetDirectoryName(ldbFilepath);
+            var nme = Path.GetFileName(ldbFilepath);
 
             _fsWatchr                     = new FileSystemWatcher(dir, nme);
             _fsWatchr.NotifyFilter        = NotifyFilters.LastWrite;

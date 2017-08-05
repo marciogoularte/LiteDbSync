@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LiteDbSync.Common.API.ServiceContracts
+﻿namespace LiteDbSync.Common.API.ServiceContracts
 {
     public interface IChangeSender
     {

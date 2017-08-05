@@ -1,5 +1,7 @@
 ﻿using Autofac;
+using LiteDbSync.Client.Lib45.DatabaseReaders;
 using LiteDbSync.Client.Lib45.FileWatchers;
+using LiteDbSync.Client.Lib45.ViewModels;
 using LiteDbSync.Common.API.ServiceContracts;
 
 namespace LiteDbSync.Client.Lib45
@@ -10,8 +12,14 @@ namespace LiteDbSync.Client.Lib45
         {
             var buildr = new ContainerBuilder();
 
+            buildr.RegisterType<MainSenderWindowVM>()
+                            .AsSelf();
+
             buildr.RegisterType<LdbFileWatcher1>()
                             .As<ILdbFileWatcher>();
+
+            buildr.RegisterType<LocalDbReader1>()
+                            .As<ILocalDbReader>();
 
             return buildr.Build().BeginLifetimeScope();
         }
