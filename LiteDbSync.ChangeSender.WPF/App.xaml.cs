@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using LiteDbSync.Client.Lib45;
+using LiteDbSync.Client.Lib45.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
