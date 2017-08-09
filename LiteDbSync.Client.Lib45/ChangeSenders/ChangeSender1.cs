@@ -6,7 +6,7 @@ namespace LiteDbSync.Client.Lib45.ChangeSenders
 {
     public class ChangeSender1 : IChangeSender
     {
-        public void SendLatestId(ulong latestId)
+        public void SendLatestId(long latestId)
         {
             new Thread(new ThreadStart(delegate
             {

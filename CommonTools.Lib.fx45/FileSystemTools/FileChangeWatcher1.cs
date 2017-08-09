@@ -1,10 +1,11 @@
-﻿using LiteDbSync.Common.API.ServiceContracts;
+﻿using CommonTools.Lib.ns11.FileSystemTools;
+using CommonTools.Lib.ns11.StringTools;
 using System;
 using System.IO;
 
-namespace LiteDbSync.Client.Lib45.FileWatchers
+namespace CommonTools.Lib.fx45.FileSystemTools
 {
-    public class LdbFileWatcher1 : ILdbFileWatcher, IDisposable
+    public class FileChangeWatcher1 : IFileChangeWatcher, IDisposable
     {
         private      EventHandler _fileChanged;
         public event EventHandler  FileChanged
@@ -17,15 +18,15 @@ namespace LiteDbSync.Client.Lib45.FileWatchers
 
 
 
-        public void StartWatching(string ldbFilepath)
+        public void StartWatching(string filepath)
         {
             if (_fsWatchr != null) return;
 
-            if (!File.Exists(ldbFilepath))
-                throw new FileNotFoundException($"LDB file not found:{Environment.NewLine}{ldbFilepath}");
+            if (!File.Exists(filepath))
+                throw new FileNotFoundException($"File not found:{L.f}{filepath}");
 
-            var dir = Path.GetDirectoryName(ldbFilepath);
-            var nme = Path.GetFileName(ldbFilepath);
+            var dir = Path.GetDirectoryName(filepath);
+            var nme = Path.GetFileName(filepath);
 
             _fsWatchr                     = new FileSystemWatcher(dir, nme);
             _fsWatchr.NotifyFilter        = NotifyFilters.LastWrite;
@@ -35,6 +36,12 @@ namespace LiteDbSync.Client.Lib45.FileWatchers
 
 
         private void OnLdbChanged(object sender, FileSystemEventArgs e)
+        {
+            RaiseFileChanged();
+        }
+
+
+        protected virtual void RaiseFileChanged()
         {
             _fileChanged?.Invoke(this, EventArgs.Empty);
         }

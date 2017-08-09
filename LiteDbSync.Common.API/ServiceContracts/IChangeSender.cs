@@ -2,6 +2,6 @@
 {
     public interface IChangeSender
     {
-        void SendLatestId(ulong latestId);
+        void SendLatestId(long latestId);
     }
 }

@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleClient.Writer", "Samp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiteDbSync.ChangeSender.WPF", "LiteDbSync.ChangeSender.WPF\LiteDbSync.ChangeSender.WPF.csproj", "{2870B0E8-8AF8-4E45-8EC9-59F1FAEF21C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTools.Lib.ns11", "CommonTools.Lib.ns11\CommonTools.Lib.ns11.csproj", "{5EA3F29D-88A0-4F43-BFD2-9156F645A74A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTools.Lib.fx45", "CommonTools.Lib.fx45\CommonTools.Lib.fx45.csproj", "{A46C1921-409F-4E24-8EF7-214425D79C17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{2870B0E8-8AF8-4E45-8EC9-59F1FAEF21C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2870B0E8-8AF8-4E45-8EC9-59F1FAEF21C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2870B0E8-8AF8-4E45-8EC9-59F1FAEF21C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EA3F29D-88A0-4F43-BFD2-9156F645A74A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EA3F29D-88A0-4F43-BFD2-9156F645A74A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EA3F29D-88A0-4F43-BFD2-9156F645A74A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EA3F29D-88A0-4F43-BFD2-9156F645A74A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A46C1921-409F-4E24-8EF7-214425D79C17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A46C1921-409F-4E24-8EF7-214425D79C17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A46C1921-409F-4E24-8EF7-214425D79C17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A46C1921-409F-4E24-8EF7-214425D79C17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -76,9 +76,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileWatchers\LdbFileWatcher1Facts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Schedulers\ChangeEventThrottler1Facts.cs" />
     <Compile Include="SutExtensions\LdbFilewatcherExtensions.cs" />
     <Compile Include="SutExtensions\MoqExtensions.cs" />
   </ItemGroup>
@@ -87,6 +85,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonTools.Lib.fx45\CommonTools.Lib.fx45.csproj">
+      <Project>{a46c1921-409f-4e24-8ef7-214425d79c17}</Project>
+      <Name>CommonTools.Lib.fx45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonTools.Lib.ns11\CommonTools.Lib.ns11.csproj">
+      <Project>{5ea3f29d-88a0-4f43-bfd2-9156f645a74a}</Project>
+      <Name>CommonTools.Lib.ns11</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LiteDbSync.Client.Lib45\LiteDbSync.Client.Lib45.csproj">
       <Project>{eaa685a8-03fb-478b-ace3-42f84eff6416}</Project>
       <Name>LiteDbSync.Client.Lib45</Name>

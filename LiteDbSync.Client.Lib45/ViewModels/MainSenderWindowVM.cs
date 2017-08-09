@@ -1,31 +1,61 @@
-﻿using LiteDbSync.Common.API.ServiceContracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Autofac;
+using CommonTools.Lib.fx45.InputTools;
+using CommonTools.Lib.fx45.ViewModelTools;
+using CommonTools.Lib.ns11.InputTools;
+using LiteDbSync.Client.Lib45.ViewModels.SoloFileWatcher;
+using LiteDbSync.Common.API.Configuration;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace LiteDbSync.Client.Lib45.ViewModels
 {
-    public class MainSenderWindowVM
+    public class MainSenderWindowVM : MainWindowVmBase
     {
-        private IChangeEventThrottler _throtl;
+        protected override string CaptionPrefix => "Change Sender";
 
-        public MainSenderWindowVM(IChangeEventThrottler changeEventThrottler)
+        private ChangeSenderSettings _cfg;
+
+        public MainSenderWindowVM(ChangeSenderSettings changeSenderSettings) : base()
         {
-            _throtl = changeEventThrottler;
+            _cfg = changeSenderSettings;
 
-            StartWatchingCmd = CreateStartWatchingCmd();
+            WatchAllCmd = R2Command.Relay(StartWatchingAll);
+            WatchAllCmd.ExecuteIfItCan();
         }
 
 
-        public ICommand StartWatchingCmd { get; }
+        public IR2Command  WatchAllCmd  { get; }
+
+        public ObservableCollection<SoloFileWatcherVM> WatchList { get; } = new ObservableCollection<SoloFileWatcherVM>();
 
 
-        private ICommand CreateStartWatchingCmd()
+        public void ResolveInternals(ILifetimeScope scope)
         {
-            throw new NotImplementedException();
+            foreach (var watchedFile in _cfg.WatchList)
+            {
+                var soloWatchr = scope.Resolve<SoloFileWatcherVM>();
+                soloWatchr.SetTarget(watchedFile);
+                WatchList.Add(soloWatchr);
+            }
+        }
+
+
+        protected override async Task BeforeExitApp()
+        {
+            StartBeingBusy("Stopping Watchers ...");
+
+            foreach (var soloWatchr in WatchList)
+            {
+                soloWatchr.StopWatchingCmd.ExecuteIfItCan();
+                await Task.Delay(1000 * 1);
+            }
+        }
+
+
+        private void StartWatchingAll()
+        {
+            foreach (var soloWatchr in WatchList)
+                soloWatchr.StartWatchingCmd.ExecuteIfItCan();
         }
     }
 }

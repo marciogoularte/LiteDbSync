@@ -2,6 +2,6 @@
 {
     public interface ILocalDbReader
     {
-        ulong GetLatestId();
+        long GetLatestId(string dbFilepath, string collectionName);
     }
 }

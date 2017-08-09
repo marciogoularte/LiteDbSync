@@ -5,16 +5,21 @@ namespace LiteDbSync.Client.Lib45.DatabaseReaders
 {
     public class LocalDbReader1 : ILocalDbReader
     {
-        private const string CONN_STR = "";
-        private const string COLXN_NAME = "";
 
 
-        public ulong GetLatestId()
+        public long GetLatestId(string dbFilepath, string collectionName)
         {
-            using (var db = new LiteDatabase(CONN_STR))
+            using (var db = CreateConnection(dbFilepath))
             {
-                return db.GetCollection(COLXN_NAME).Max();
+                return db.GetCollection(collectionName).Max();
             }
+        }
+
+
+        private LiteDatabase CreateConnection(string filepath)
+        {
+            var connStr = $"Filename={filepath};Mode=ReadOnly;";
+            return new LiteDatabase(connStr);
         }
     }
 }

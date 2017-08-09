@@ -1,12 +1,6 @@
-﻿using Autofac;
-using LiteDbSync.Client.Lib45;
+﻿using CommonTools.Lib.fx45.DependencyInjection;
+using LiteDbSync.Client.Lib45.ComponentsRegistry;
 using LiteDbSync.Client.Lib45.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace LiteDbSync.ChangeSender.WPF
@@ -17,11 +11,18 @@ namespace LiteDbSync.ChangeSender.WPF
         {
             base.OnStartup(e);
 
-            using (var scope = ComponentRegistry.Build())
+            using (var scope = ChangeSenderComponents.Build(this))
             {
-                var win = new MainWindow();
-                win.DataContext = scope.Resolve<MainSenderWindowVM>();
-                win.Show();
+                if (scope.TryResolveOrAlert<MainSenderWindowVM>
+                                       (out MainSenderWindowVM vm))
+                {
+                    var win = new MainWindow();
+                    vm.ResolveInternals(scope);
+                    win.DataContext = vm;
+                    win.Show();
+                }
+                else
+                    this.Shutdown();
             }
         }
     }
