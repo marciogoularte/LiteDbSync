@@ -11,7 +11,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace CommonTools.Lib.fx45.SignalRHubServers
+namespace CommonTools.Lib.fx45.SignalRServers
 {
     public class SignalRServerToggleVM : ViewModelBase
     {

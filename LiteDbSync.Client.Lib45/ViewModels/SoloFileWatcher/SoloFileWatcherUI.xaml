@@ -8,7 +8,10 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel>
         <TextBlock Text="{Binding Title}" />
-        <TextBlock Text="{Binding LatestId, StringFormat={}latest ID: {0:n0}}" />
+        <TextBlock Text="{Binding LatestId, StringFormat={}latest local ID: {0:n0}}" />
         <TextBlock Text="{Binding Status}" />
+        <ListBox DataContext="{Binding Sender}"
+                 ItemsSource="{Binding Logs}"
+                 />
     </StackPanel>
 </UserControl>

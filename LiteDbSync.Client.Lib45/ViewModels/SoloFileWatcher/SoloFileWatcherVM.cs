@@ -1,22 +1,19 @@
 ﻿using CommonTools.Lib.fx45.InputTools;
 using CommonTools.Lib.fx45.ViewModelTools;
+using CommonTools.Lib.ns11.ExceptionTools;
 using CommonTools.Lib.ns11.FileSystemTools;
 using CommonTools.Lib.ns11.InputTools;
-using CommonTools.Lib.ns11.ExceptionTools;
 using LiteDbSync.Common.API.Configuration;
 using LiteDbSync.Common.API.ServiceContracts;
 using System;
 using System.IO;
-using System.Threading;
-using System.Windows;
-using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace LiteDbSync.Client.Lib45.ViewModels.SoloFileWatcher
 {
     public class SoloFileWatcherVM : ViewModelBase
     {
         private IThrottledFileWatcher _watchr;
-        private IChangeSender         _sendr;
         private ILocalDbReader        _db;
         private FileWatcherSettings   _cfg;
 
@@ -26,8 +23,8 @@ namespace LiteDbSync.Client.Lib45.ViewModels.SoloFileWatcher
                                  IChangeSender changeSender)
         {
             _db     = localDbReader;
-            _sendr  = changeSender;
             _watchr = throttledFileWatcher;
+            Sender  = changeSender;
             _watchr.FileChanged += _watchr_FileChanged;
 
             StartWatchingCmd = R2Command.Relay(StartWatchingLDB);
@@ -35,9 +32,10 @@ namespace LiteDbSync.Client.Lib45.ViewModels.SoloFileWatcher
         }
 
 
-        public IR2Command  StartWatchingCmd  { get; }
-        public IR2Command  StopWatchingCmd   { get; }
-        public long        LatestId          { get; private set; }
+        public IR2Command     StartWatchingCmd  { get; }
+        public IR2Command     StopWatchingCmd   { get; }
+        public IChangeSender  Sender            { get; }
+        public long           LatestId          { get; private set; }
 
 
         private void StartWatchingLDB()
@@ -56,15 +54,17 @@ namespace LiteDbSync.Client.Lib45.ViewModels.SoloFileWatcher
         private void _watchr_FileChanged(object sender, EventArgs e)
         {
             if (!TryGetLatestId()) return;
-            try
-            {
-                _sendr.SendLatestId(LatestId);
-            }
-            catch (Exception ex)
-            {
-                SetStatus(ex.Info(true, true));
-            }
+            //Sender.SendChangesIfAny(LatestId);
+            Task.Run(async () => await SendChangesIfAny());
         }
+
+
+        private async Task SendChangesIfAny()
+        {
+            await Task.Delay(0);
+            throw new NotImplementedException();
+        }
+
 
 
         private bool TryGetLatestId()

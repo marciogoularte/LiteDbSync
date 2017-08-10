@@ -1,4 +1,4 @@
-﻿using CommonTools.Lib.fx45.SignalRHubServers;
+﻿using CommonTools.Lib.fx45.SignalRServers;
 using CommonTools.Lib.fx45.ViewModelTools;
 
 namespace LiteDbSync.Server.Lib45.ViewModels

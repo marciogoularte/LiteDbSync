@@ -5,7 +5,7 @@ using Microsoft.Owin.Hosting;
 using Owin;
 using System;
 
-namespace CommonTools.Lib.fx45.SignalRHubServers
+namespace CommonTools.Lib.fx45.SignalRServers
 {
     public class SignalRWebApp1 : ISignalRWebApp
     {

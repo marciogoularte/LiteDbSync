@@ -87,7 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\CatchUpWriterCfgFileLoader.cs" />
-    <Compile Include="SignalRHubs\ChangeReceiverHub.cs" />
+    <Compile Include="SignalRHubs\ChangeReceiverHub1.cs" />
     <Compile Include="ViewModels\MainCatchUpWindowVM.cs" />
     <Page Include="UserControl1.xaml">
       <Generator>MSBuild:Compile</Generator>

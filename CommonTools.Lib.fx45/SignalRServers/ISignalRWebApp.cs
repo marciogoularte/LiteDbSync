@@ -2,7 +2,7 @@
 using Owin;
 using System;
 
-namespace CommonTools.Lib.fx45.SignalRHubServers
+namespace CommonTools.Lib.fx45.SignalRServers
 {
     public interface ISignalRWebApp : IDisposable
     {

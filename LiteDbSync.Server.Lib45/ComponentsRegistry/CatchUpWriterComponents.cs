@@ -2,7 +2,7 @@
 using Autofac.Integration.SignalR;
 using CommonTools.Lib.fx45.DependencyInjection;
 using CommonTools.Lib.fx45.ExceptionTools;
-using CommonTools.Lib.fx45.SignalRHubServers;
+using CommonTools.Lib.fx45.SignalRServers;
 using CommonTools.Lib.ns11.SignalRHubServers;
 using LiteDbSync.Common.API.Configuration;
 using LiteDbSync.Server.Lib45.Configuration;
@@ -34,9 +34,8 @@ namespace LiteDbSync.Server.Lib45.ComponentsRegistry
 
             b.RegisterHubs(Assembly.GetExecutingAssembly());
 
-            var containr = b.Build();
-            var scope    = containr.BeginLifetimeScope();
-            var webApp   = scope.Resolve<ISignalRWebApp>();
+            var scope  = b.Build().BeginLifetimeScope();
+            var webApp = scope.Resolve<ISignalRWebApp>();
             webApp.SetResolver(scope);
 
             return scope;

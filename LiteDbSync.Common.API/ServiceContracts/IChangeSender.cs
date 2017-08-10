@@ -1,7 +1,11 @@
-﻿namespace LiteDbSync.Common.API.ServiceContracts
+﻿using System.Collections.ObjectModel;
+
+namespace LiteDbSync.Common.API.ServiceContracts
 {
     public interface IChangeSender
     {
-        void SendLatestId(long latestId);
+        //void SendChangesIfAny(long latestId);
+
+        ObservableCollection<string> Logs { get; }
     }
 }
