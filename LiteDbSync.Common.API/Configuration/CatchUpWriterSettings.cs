@@ -11,7 +11,7 @@ namespace LiteDbSync.Common.API.Configuration
         {
             return new CatchUpWriterSettings
             {
-                ServerURL = "ServerURL goes here"
+                ServerURL = "http://server.url.go:1234",
             };
         }
     }

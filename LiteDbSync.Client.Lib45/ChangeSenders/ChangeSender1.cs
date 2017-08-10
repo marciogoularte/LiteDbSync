@@ -1,20 +1,26 @@
 ﻿using CommonTools.Lib.fx45.ExceptionTools;
+using CommonTools.Lib.ns11.SignalRHubServers;
 using LiteDbSync.Common.API.ServiceContracts;
 using Microsoft.AspNet.SignalR.Client;
 using System;
 using System.Net.Http;
-using System.Threading;
-using System.Windows;
 
 namespace LiteDbSync.Client.Lib45.ChangeSenders
 {
     public class ChangeSender1 : IChangeSender
     {
+        private IHubClientSettings _cfg;
+
+        public ChangeSender1(IHubClientSettings hubClientSettings)
+        {
+            _cfg = hubClientSettings;
+        }
+
+
         public async void SendLatestId(long id)
         {
-
-            var conn = new HubConnection("http://localhost:12345/");
-            var hub  = conn.CreateHubProxy("SampleHub1");
+            var conn = new HubConnection(_cfg.ServerURL);
+            var hub  = conn.CreateHubProxy(_cfg.HubName);
 
             try
             {

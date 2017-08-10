@@ -1,4 +1,5 @@
-﻿using CommonTools.Lib.fx45.InputTools;
+﻿using CommonTools.Lib.fx45.ExceptionTools;
+using CommonTools.Lib.fx45.InputTools;
 using CommonTools.Lib.fx45.ViewModelTools;
 using CommonTools.Lib.ns11.ExceptionTools;
 using CommonTools.Lib.ns11.InputTools;
@@ -40,16 +41,17 @@ namespace CommonTools.Lib.fx45.SignalRHubServers
         {
             var url = _cfg.ServerURL;
 
-            SetStatus($"Starting server at [{url}]...");
+            SetStatus($"Starting server at [{url}] ...");
             try
             {
                 _app.StartServer(url);
                 SetStatus("Server successfully started.");
             }
-            catch (TargetInvocationException)
+            catch (TargetInvocationException ex)
             {
                 var msg = GetPortConflictMessage(url);
                 MessageBox.Show(msg, "Failed to start server", MessageBoxButton.OK, MessageBoxImage.Error);
+                ex.ShowAlert();
             }
             catch (Exception ex)
             {
@@ -58,9 +60,12 @@ namespace CommonTools.Lib.fx45.SignalRHubServers
         }
 
 
-        private Task StopServer()
+        private async Task StopServer()
         {
-            throw new NotImplementedException();
+            SetStatus("Stopping server ...");
+            _app.StopServer();
+            await Task.Delay(1000);
+            SetStatus("Server successfully stopped.");
         }
 
 

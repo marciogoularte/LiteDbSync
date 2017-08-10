@@ -4,6 +4,7 @@ using CommonTools.Lib.fx45.ExceptionTools;
 using CommonTools.Lib.fx45.FileSystemTools;
 using CommonTools.Lib.fx45.ViewModelTools;
 using CommonTools.Lib.ns11.FileSystemTools;
+using CommonTools.Lib.ns11.SignalRHubServers;
 using LiteDbSync.Client.Lib45.ChangeSenders;
 using LiteDbSync.Client.Lib45.Configuration;
 using LiteDbSync.Client.Lib45.DatabaseReaders;
@@ -23,7 +24,9 @@ namespace LiteDbSync.Client.Lib45.ComponentsRegistry
             var b   = new ContainerBuilder();
 
             var cfg = ChangeSenderCfgFile.LoadOrDefault();
-            b.RegisterInstance<ChangeSenderSettings>(cfg);
+            b.RegisterInstance<ChangeSenderSettings>(cfg)
+                            .As<IHubClientSettings>()
+                            .AsSelf();
 
             b.Solo  <MainSenderWindowVM>();
             b.Multi <SoloFileWatcherVM>();

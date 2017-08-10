@@ -18,6 +18,8 @@ namespace LiteDbSync.Server.Lib45.ComponentsRegistry
     {
         private static ILifetimeScope BuildAndBeginScope(Application app)
         {
+            SetDataTemplates(app);
+
             var b   = new ContainerBuilder();
             b.RegisterHubs(Assembly.GetExecutingAssembly());
 
@@ -30,16 +32,14 @@ namespace LiteDbSync.Server.Lib45.ComponentsRegistry
             b.Solo <SignalRServerToggleVM>();
             b.Solo <ISignalRWebApp, SignalRWebApp1>();
 
-            //b.Multi<IThrottledFileWatcher, ThrottledFileWatcher1>();
-            //b.Multi<ILocalDbReader, LocalDbReader1>();
-            //b.Multi<IChangeSender, ChangeSender1>();
-
-            SetDataTemplates(app);
+            b.RegisterHubs(Assembly.GetExecutingAssembly());
 
             var containr = b.Build();
-            GlobalHost.DependencyResolver = new AutofacDependencyResolver(containr);
+            var scope    = containr.BeginLifetimeScope();
+            var webApp   = scope.Resolve<ISignalRWebApp>();
+            webApp.SetResolver(scope);
 
-            return containr.BeginLifetimeScope();
+            return scope;
         }
 
 

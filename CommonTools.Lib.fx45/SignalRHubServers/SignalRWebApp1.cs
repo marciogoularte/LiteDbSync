@@ -1,17 +1,21 @@
-﻿using CommonTools.Lib.ns11.SignalRHubServers;
+﻿using Autofac;
+using Autofac.Integration.SignalR;
+using Microsoft.AspNet.SignalR;
+using Microsoft.Owin.Hosting;
+using Owin;
 using System;
-using System.Threading.Tasks;
 
 namespace CommonTools.Lib.fx45.SignalRHubServers
 {
     public class SignalRWebApp1 : ISignalRWebApp
     {
-        private IDisposable _webApp;
+        private        IDisposable    _webApp;
+        private static ILifetimeScope _scope;
 
 
-        public void StartServer(string serverURI)
+        public void StartServer(string serverUrl)
         {
-            throw new NotImplementedException();
+            _webApp = WebApp.Start<SignalRWebApp1>(serverUrl);
         }
 
 
@@ -20,6 +24,28 @@ namespace CommonTools.Lib.fx45.SignalRHubServers
             try { _webApp?.Dispose(); }
             catch { }
             _webApp = null;
+            try { _scope?.Dispose(); }
+            catch { }
+            _scope = null;
+        }
+
+
+        //http://docs.autofac.org/en/latest/integration/signalr.html#owin-integration
+        public void Configuration(IAppBuilder app)
+        {
+            var hubCfg = new HubConfiguration();
+            hubCfg.EnableDetailedErrors = true;
+
+            hubCfg.Resolver = new AutofacDependencyResolver(_scope);
+            app.UseAutofacMiddleware(_scope);
+
+            app.MapSignalR("/signalr", hubCfg);
+        }
+
+
+        public void SetResolver(ILifetimeScope scope)
+        {
+            _scope = scope;
         }
 
 
