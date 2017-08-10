@@ -24,6 +24,7 @@ namespace CommonTools.Lib.fx45.DependencyInjection
 
         public static bool TryResolveOrAlert<T>(this ILifetimeScope scope, out T component)
         {
+            if (scope == null) goto ReturnFalse;
             try
             {
                 component = scope.Resolve<T>();
@@ -32,9 +33,10 @@ namespace CommonTools.Lib.fx45.DependencyInjection
             catch (DependencyResolutionException ex)
             {
                 MessageBox.Show(ex.GetMessage(), "Failed to Resolve Dependencies", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            ReturnFalse:
                 component = default(T);
                 return false;
-            }
         }
 
 

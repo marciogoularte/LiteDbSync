@@ -5,8 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LiteDbSync.CatchUpWriter.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="{Binding Caption}" Height="350" Width="525">
+    <DockPanel DataContext="{Binding ServerToggle}">
+        <StackPanel DockPanel.Dock="Top"
+                    Orientation="Horizontal">
+            <Button Command="{Binding StartServerCmd}"
+                    Content="Start server"
+                    />
+            <Button Command="{Binding StopServerCmd}"
+                    Content="Stop server"
+                    />
+        </StackPanel>
+        <ListBox ItemsSource="{Binding Logs}"
+                 />
+    </DockPanel>
 </Window>

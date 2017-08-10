@@ -4,4 +4,8 @@
     <TargetFramework>netstandard1.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CommonTools.Lib.ns11\CommonTools.Lib.ns11.csproj" />
+  </ItemGroup>
+
 </Project>

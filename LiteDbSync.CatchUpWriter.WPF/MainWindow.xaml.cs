@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Owin.Hosting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,17 @@ namespace LiteDbSync.CatchUpWriter.WPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private IDisposable _signalr;
+
+
         public MainWindow()
         {
             InitializeComponent();
+
+            Loaded += (s, e) =>
+            {
+                _signalr = WebApp.Start<Startup>("http://localhost:12345/");
+            };
         }
     }
 }
