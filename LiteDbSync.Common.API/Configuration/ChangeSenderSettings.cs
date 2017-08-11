@@ -8,7 +8,7 @@ namespace LiteDbSync.Common.API.Configuration
         public string   ServerURL  { get; set; }
         public string   HubName    { get; set; }
 
-        public List<FileWatcherSettings>  WatchList  { get; set; }
+        public List<DbWatcherSettings>  WatchList  { get; set; }
 
         public static ChangeSenderSettings CreateDefault()
         {
@@ -16,20 +16,10 @@ namespace LiteDbSync.Common.API.Configuration
             {
                 ServerURL = "http://server.url.go:1234",
                 HubName   = "HubNameHere",
-                WatchList = new List<FileWatcherSettings>
+                WatchList = new List<DbWatcherSettings>
                 {
-                    new FileWatcherSettings
-                    {
-                        DbFilePath     = "DbFilePath goes here",
-                        CollectionName = "CollectionName goes here",
-                        IntervalMS     = 1000
-                    },
-                    new FileWatcherSettings
-                    {
-                        DbFilePath     = "DbFilePath goes here",
-                        CollectionName = "CollectionName goes here",
-                        IntervalMS     = 1000
-                    },
+                    DbWatcherSettings.CreateDefault(),
+                    DbWatcherSettings.CreateDefault(),
                 }
             };
         }

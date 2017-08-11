@@ -8,6 +8,7 @@ using CommonTools.Lib.ns11.SignalRHubServers;
 using LiteDbSync.Client.Lib45.ChangeSenders;
 using LiteDbSync.Client.Lib45.Configuration;
 using LiteDbSync.Client.Lib45.DatabaseReaders;
+using LiteDbSync.Client.Lib45.HubClientProxies;
 using LiteDbSync.Client.Lib45.ViewModels;
 using LiteDbSync.Client.Lib45.ViewModels.SoloFileWatcher;
 using LiteDbSync.Common.API.Configuration;
@@ -31,9 +32,10 @@ namespace LiteDbSync.Client.Lib45.ComponentsRegistry
             b.Solo  <MainSenderWindowVM>();
             b.Multi <SoloFileWatcherVM>();
 
-            b.Multi<IThrottledFileWatcher, ThrottledFileWatcher1>();
-            b.Multi<ILocalDbReader, LocalDbReader1>();
-            b.Multi<IChangeSender, ChangeSender1>();
+            b.Multi <IThrottledFileWatcher, ThrottledFileWatcher1>();
+            b.Multi <ILocalDbReader, LocalDbReader1>();
+            b.Multi <IChangeSender, ChangeSender1>();
+            b.Multi <IChangeReceiver, ChangeReceiverClientProxy1>();
 
             SetDataTemplates(app);
 

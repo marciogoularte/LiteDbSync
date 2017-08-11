@@ -89,15 +89,7 @@
     <Compile Include="Configuration\CatchUpWriterCfgFileLoader.cs" />
     <Compile Include="SignalRHubs\ChangeReceiverHub1.cs" />
     <Compile Include="ViewModels\MainCatchUpWindowVM.cs" />
-    <Page Include="UserControl1.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="ComponentsRegistry\CatchUpWriterComponents.cs" />
-    <Compile Include="UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

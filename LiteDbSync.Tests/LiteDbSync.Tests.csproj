@@ -79,6 +79,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SutExtensions\LdbFilewatcherExtensions.cs" />
     <Compile Include="SutExtensions\MoqExtensions.cs" />
+    <Compile Include="TaskThreadTools\RunIfIdleThrottlerFacts.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

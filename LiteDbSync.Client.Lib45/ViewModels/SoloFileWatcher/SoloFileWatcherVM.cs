@@ -1,28 +1,23 @@
 ﻿using CommonTools.Lib.fx45.InputTools;
 using CommonTools.Lib.fx45.ViewModelTools;
-using CommonTools.Lib.ns11.ExceptionTools;
 using CommonTools.Lib.ns11.FileSystemTools;
 using CommonTools.Lib.ns11.InputTools;
 using LiteDbSync.Common.API.Configuration;
 using LiteDbSync.Common.API.ServiceContracts;
 using System;
 using System.IO;
-using System.Threading.Tasks;
 
 namespace LiteDbSync.Client.Lib45.ViewModels.SoloFileWatcher
 {
     public class SoloFileWatcherVM : ViewModelBase
     {
         private IThrottledFileWatcher _watchr;
-        private ILocalDbReader        _db;
-        private FileWatcherSettings   _cfg;
+        private DbWatcherSettings   _cfg;
 
 
         public SoloFileWatcherVM(IThrottledFileWatcher throttledFileWatcher,
-                                 ILocalDbReader localDbReader,
                                  IChangeSender changeSender)
         {
-            _db     = localDbReader;
             _watchr = throttledFileWatcher;
             Sender  = changeSender;
             _watchr.FileChanged += _watchr_FileChanged;
@@ -35,7 +30,6 @@ namespace LiteDbSync.Client.Lib45.ViewModels.SoloFileWatcher
         public IR2Command     StartWatchingCmd  { get; }
         public IR2Command     StopWatchingCmd   { get; }
         public IChangeSender  Sender            { get; }
-        public long           LatestId          { get; private set; }
 
 
         private void StartWatchingLDB()
@@ -53,37 +47,11 @@ namespace LiteDbSync.Client.Lib45.ViewModels.SoloFileWatcher
 
         private void _watchr_FileChanged(object sender, EventArgs e)
         {
-            if (!TryGetLatestId()) return;
-            //Sender.SendChangesIfAny(LatestId);
-            Task.Run(async () => await SendChangesIfAny());
+            Sender.SendChangesIfAny(_cfg);
         }
 
 
-        private async Task SendChangesIfAny()
-        {
-            await Task.Delay(0);
-            throw new NotImplementedException();
-        }
-
-
-
-        private bool TryGetLatestId()
-        {
-            try
-            {
-                LatestId = _db.GetLatestId(_cfg.DbFilePath, 
-                                           _cfg.CollectionName);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                SetStatus(ex.Info(true, true));
-                return false;
-            }
-        }
-
-
-        internal void SetTarget(FileWatcherSettings fileWatcherSettings)
+        internal void SetTarget(DbWatcherSettings fileWatcherSettings)
         {
             _cfg = fileWatcherSettings;
             var nme = Path.GetFileName(_cfg.DbFilePath);

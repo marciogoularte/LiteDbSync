@@ -70,6 +70,7 @@
     <Compile Include="ComponentsRegistry\ChangeSenderComponents.cs" />
     <Compile Include="Configuration\ChangeSenderCfgFileLoader.cs" />
     <Compile Include="DatabaseReaders\LocalDbReader1.cs" />
+    <Compile Include="HubClientProxies\ChangeReceiverClientProxy1.cs" />
     <Compile Include="ViewModels\SoloFileWatcher\SoloFileWatcherUI.xaml.cs">
       <DependentUpon>SoloFileWatcherUI.xaml</DependentUpon>
     </Compile>
