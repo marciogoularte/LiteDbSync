@@ -6,9 +6,11 @@
         xmlns:local="clr-namespace:LiteDbSync.CatchUpWriter.WPF"
         mc:Ignorable="d"
         Title="{Binding Caption}" Height="350" Width="525">
-    <DockPanel DataContext="{Binding ServerToggle}">
+    <DockPanel>
         <StackPanel DockPanel.Dock="Top"
-                    Orientation="Horizontal">
+                    Orientation="Horizontal"
+                    DataContext="{Binding ServerToggle}"
+                    >
             <Button Command="{Binding StartServerCmd}"
                     Content="Start server"
                     />
@@ -16,7 +18,8 @@
                     Content="Stop server"
                     />
         </StackPanel>
-        <ListBox ItemsSource="{Binding Logs}"
+        <ListBox ItemsSource="{Binding List}"
+                 DataContext="{Binding CommonLogs}"
                  />
     </DockPanel>
 </Window>

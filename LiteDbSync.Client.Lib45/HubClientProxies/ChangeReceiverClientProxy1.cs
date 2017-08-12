@@ -21,25 +21,25 @@ namespace LiteDbSync.Client.Lib45.HubClientProxies
         }
 
 
-        public async Task<long> GetLastRemoteId(string dbKey)
+        public async Task<long> GetLastRemoteId(string dbName)
         {
             if (_conn == null) await Connect();
             var methd = nameof(IChangeReceiver.GetLastRemoteId);
-            return await _hub.Invoke<long>(methd, dbKey);
+            return await _hub.Invoke<long>(methd, dbName);
         }
 
 
-        public async Task SendRecordsToRemote(string dbKey, List<string> records)
+        public async Task SendRecordsToRemote(string dbName, List<string> records)
         {
             if (_conn == null) await Connect();
-            await _hub.Invoke(nameof(IChangeReceiver.SendRecordsToRemote), dbKey, records);
+            await _hub.Invoke(nameof(IChangeReceiver.SendRecordsToRemote), dbName, records);
         }
 
 
-        public async Task ReportDataAnomaly(string dbKey, string description)
+        public async Task ReportDataAnomaly(string dbName, string description)
         {
             if (_conn == null) await Connect();
-            await _hub.Invoke(nameof(IChangeReceiver.ReportDataAnomaly), dbKey, description);
+            await _hub.Invoke(nameof(IChangeReceiver.ReportDataAnomaly), dbName, description);
         }
 
 

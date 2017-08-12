@@ -61,16 +61,17 @@ namespace LiteDbSync.Client.Lib45.ChangeSenders
         private async Task SendChangesIfAnyAsync(DbWatcherSettings cfg)
         {
             LocalId  = _local.GetLatestId(cfg.DbFilePath, cfg.CollectionName);
-            RemoteId = await GetLastServerId();
+            RemoteId = await GetLastServerId(cfg);
+            if (RemoteId < 0) return;
             if (RemoteId == LocalId) return;
 
             if (RemoteId > LocalId)
             {
-                await ReportRemoteIdGreaterThanLocal();
+                await ReportRemoteIdGreaterThanLocal(cfg);
                 return;
             }
-
             await SendChangesToServer(cfg);
+            await SendChangesIfAnyAsync(cfg);
         }
 
 
@@ -79,23 +80,23 @@ namespace LiteDbSync.Client.Lib45.ChangeSenders
             var recs = _local.GetRecords(cfg.DbFilePath,
                             cfg.CollectionName, RemoteId + 1, LocalId);
 
-            Log($"Sending {recs.Count:N0} records to remote database ...");
+            Log($"Sending {recs.Count:N0} record(s) to remote database ...");
 
-            await _hub.SendRecordsToRemote(recs);
+            await _hub.SendRecordsToRemote(cfg.UniqueDbName, recs);
         }
 
 
-        private async Task ReportRemoteIdGreaterThanLocal()
+        private async Task ReportRemoteIdGreaterThanLocal(DbWatcherSettings cfg)
         {
             var msg = $"Remote ID [{RemoteId}] is greater than Local ID [{LocalId}].";
             Log("«DATA_ANOMALY»  " + msg);
-            await _hub.ReportDataAnomaly(msg);
+            await _hub.ReportDataAnomaly(cfg.UniqueDbName, msg);
         }
 
 
-        private async Task<long> GetLastServerId()
+        private async Task<long> GetLastServerId(DbWatcherSettings cfg)
         {
-            var newId = await _hub.GetLastRemoteId();
+            var newId = await _hub.GetLastRemoteId(cfg.UniqueDbName);
 
             if (newId != RemoteId)
                 Log($"Latest remote Id: [{newId:N0}]");

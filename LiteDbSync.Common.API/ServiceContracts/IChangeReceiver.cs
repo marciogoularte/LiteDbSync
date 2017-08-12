@@ -5,8 +5,8 @@ namespace LiteDbSync.Common.API.ServiceContracts
 {
     public interface IChangeReceiver
     {
-        Task<long> GetLastRemoteId     (string dbKey);
-        Task       SendRecordsToRemote (string dbKey, List<string> records);
-        Task       ReportDataAnomaly   (string dbKey, string description);
+        Task<long> GetLastRemoteId     (string dbName);
+        Task       SendRecordsToRemote (string dbName, List<string> records);
+        Task       ReportDataAnomaly   (string dbName, string description);
     }
 }

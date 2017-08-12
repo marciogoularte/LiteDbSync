@@ -102,6 +102,7 @@
     <Compile Include="InputTools\R2AsyncCommandWPF.cs" />
     <Compile Include="InputTools\R2CommandsFactory.cs" />
     <Compile Include="LiteDbTools\TypelessDbReader1.cs" />
+    <Compile Include="LiteDbTools\TypelessDbWriter1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -119,6 +120,7 @@
     <Compile Include="SignalRServers\ISignalRWebApp.cs" />
     <Compile Include="SignalRServers\SignalRServerToggleVM.cs" />
     <Compile Include="SignalRServers\SignalRWebApp1.cs" />
+    <Compile Include="ViewModelTools\CommonLogListVM.cs" />
     <Compile Include="ViewModelTools\DataTemplateExtensions.cs" />
     <Compile Include="ViewModelTools\MainWindowVmBase.cs" />
     <Compile Include="ViewModelTools\ViewModelBase.cs" />

@@ -9,6 +9,9 @@ namespace CommonTools.Lib.fx45.LiteDbTools
         {
             using (var db = CreateConnection(dbFilepath))
             {
+                if (!db.CollectionExists(collectionName))
+                    return 0;
+
                 return db.GetCollection(collectionName).Max();
             }
         }
@@ -36,7 +39,7 @@ namespace CommonTools.Lib.fx45.LiteDbTools
         }
 
 
-        private LiteDatabase CreateConnection(string filepath)
+        protected LiteDatabase CreateConnection(string filepath)
         {
             var connStr = GetConnectionString(filepath);
             return new LiteDatabase(connStr);

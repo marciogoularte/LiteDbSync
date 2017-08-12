@@ -1,36 +1,52 @@
-﻿using CommonTools.Lib.ns11.StringTools;
+﻿using CommonTools.Lib.fx45.ViewModelTools;
+using CommonTools.Lib.ns11.CollectionTools;
+using LiteDbSync.Common.API.Configuration;
 using LiteDbSync.Common.API.ServiceContracts;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System;
-using System.Threading;
 
 namespace LiteDbSync.Server.Lib45.SignalRHubs
 {
     [HubName("ChangeReceiverHub")]
     public class ChangeReceiverHub1 : Hub, IChangeReceiver
     {
-        private ILocalDbWriter _db;
+        private ILocalDbWriter        _db;
+        private CatchUpWriterSettings _cfg;
+        private CommonLogListVM       _log;
 
 
-        public ChangeReceiverHub1(ILocalDbWriter localDbWriter)
+        public ChangeReceiverHub1(ILocalDbWriter localDbWriter,
+                                  CatchUpWriterSettings catchUpWriterSettings,
+                                  CommonLogListVM commonLogListVM)
         {
-            _db = localDbWriter;
+            _db  = localDbWriter;
+            _cfg = catchUpWriterSettings;
+            _log = commonLogListVM;
         }
 
 
-        public async  Task<long> GetLastRemoteId(string dbKey)
+        public async  Task<long> GetLastRemoteId(string dbName)
         {
             await Task.Delay(0);
-            return 123;
-            //return _db.GetLatestId()
+            var c = GetTargetSettings(dbName);
+            try
+            {
+                return _db.GetLatestId(c.DbFilePath, c.CollectionName);
+            }
+            catch (Exception ex)
+            {
+                _log.Add(ex);
+                return -1;
+            }
         }
 
 
-        public async Task ReportDataAnomaly(string dbKey, string description)
+        public async Task ReportDataAnomaly(string dbName, string description)
         {
             await Task.Delay(0);
             new Thread(new ThreadStart(delegate
@@ -41,15 +57,28 @@ namespace LiteDbSync.Server.Lib45.SignalRHubs
         }
 
 
-        public async Task SendRecordsToRemote(string dbKey, List<string> records)
+        public async Task SendRecordsToRemote(string dbName, List<string> records)
         {
             await Task.Delay(0);
-            //new Thread(new ThreadStart(delegate
-            //{
-            //    MessageBox.Show($"latestId:  {latestId}");
-            //}
-            //)).Start();
-            MessageBox.Show(string.Join(L.f, records), "ChangeReceiverHub1 received the records");
+            //MessageBox.Show(string.Join(L.f, records), "ChangeReceiverHub1 received the records");
+            var c = GetTargetSettings(dbName);
+            try
+            {
+                _db.Insert(c.DbFilePath, c.CollectionName, records);
+                _log.Add($"{records.Count:N0} record(s) inserted into “{c.UniqueDbName}”.");
+            }
+            catch (Exception ex)
+            {
+                _log.Add(ex);
+            }
+        }
+
+
+        private DbTargetSettings GetTargetSettings(string dbName)
+        {
+            return _cfg.Targets.GetOne(_ 
+                => _.UniqueDbName.Trim().ToLower() 
+                        == dbName.Trim().ToLower(), "UniqueDbName == dbName");
         }
     }
 }

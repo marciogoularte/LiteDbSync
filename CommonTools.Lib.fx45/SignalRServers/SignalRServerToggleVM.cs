@@ -6,7 +6,6 @@ using CommonTools.Lib.ns11.InputTools;
 using CommonTools.Lib.ns11.SignalRHubServers;
 using CommonTools.Lib.ns11.StringTools;
 using System;
-using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,24 +16,24 @@ namespace CommonTools.Lib.fx45.SignalRServers
     {
         private ISignalRServerSettings _cfg;
         private ISignalRWebApp         _app;
+        private CommonLogListVM        _log;
 
         public SignalRServerToggleVM(ISignalRWebApp signalRWebApp,
-                                     ISignalRServerSettings signalRServerSettings)
+                                     ISignalRServerSettings signalRServerSettings,
+                                     CommonLogListVM commonLogListVM)
         {
             _app = signalRWebApp;
             _cfg = signalRServerSettings;
+            _log = commonLogListVM;
 
             StartServerCmd = R2Command.Relay(StartServer);
             StopServerCmd  = R2Command.Async(StopServer);
 
-            StatusChanged += (s, e) => AsUI(_ => Logs.Add(e));
+            StatusChanged += (s, e) => _log.Add(e);
         }
 
         public IR2Command  StartServerCmd  { get; }
         public IR2Command  StopServerCmd   { get; }
-
-
-        public ObservableCollection<string> Logs { get; } = new ObservableCollection<string>();
 
 
         private void StartServer()

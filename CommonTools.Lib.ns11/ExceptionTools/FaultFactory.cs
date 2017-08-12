@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.CompilerServices;
 
 namespace CommonTools.Lib.ns11.ExceptionTools
@@ -9,6 +10,12 @@ namespace CommonTools.Lib.ns11.ExceptionTools
         {
             var msg = $"Please call method “{requiredMethod}” before calling “{callerMemberName}”.";
             return new InvalidOperationException(msg);
+        }
+
+
+        public static InvalidDataException BadData(string description)
+        {
+            return new InvalidDataException(description);
         }
     }
 }

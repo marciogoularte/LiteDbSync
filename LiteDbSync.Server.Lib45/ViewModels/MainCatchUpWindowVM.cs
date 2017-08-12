@@ -8,13 +8,16 @@ namespace LiteDbSync.Server.Lib45.ViewModels
         protected override string CaptionPrefix => "Catch-up Writer";
 
 
-        public MainCatchUpWindowVM(SignalRServerToggleVM signalRServerToggleVM)
+        public MainCatchUpWindowVM(SignalRServerToggleVM signalRServerToggleVM,
+                                   CommonLogListVM commonLogListVM)
         {
+            CommonLogs   = commonLogListVM;
             ServerToggle = signalRServerToggleVM;
             ServerToggle.StartServerCmd.ExecuteIfItCan();
         }
 
 
         public SignalRServerToggleVM  ServerToggle  { get; }
+        public CommonLogListVM        CommonLogs    { get; }
     }
 }
