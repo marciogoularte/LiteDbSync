@@ -9,6 +9,7 @@ using LiteDbSync.Common.API.Configuration;
 using LiteDbSync.Common.API.ServiceContracts;
 using LiteDbSync.Server.Lib45.Configuration;
 using LiteDbSync.Server.Lib45.DatabaseWriters;
+using LiteDbSync.Server.Lib45.SignalRHubs;
 using LiteDbSync.Server.Lib45.ViewModels;
 using Microsoft.AspNet.SignalR;
 using System;
@@ -38,7 +39,8 @@ namespace LiteDbSync.Server.Lib45.ComponentsRegistry
 
             b.Multi<ILocalDbWriter, LocalDbWriter1>();
 
-            b.RegisterHubs(Assembly.GetExecutingAssembly());
+            //b.RegisterHubs(Assembly.GetExecutingAssembly());
+            b.RegisterType<ChangeReceiverHub1>();
 
             var scope  = b.Build().BeginLifetimeScope();
             var webApp = scope.Resolve<ISignalRWebApp>();

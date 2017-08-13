@@ -1,5 +1,6 @@
 ﻿using CommonTools.Lib.fx45.SignalRServers;
 using CommonTools.Lib.fx45.ViewModelTools;
+using LiteDbSync.Common.API.Configuration;
 
 namespace LiteDbSync.Server.Lib45.ViewModels
 {
@@ -9,14 +10,17 @@ namespace LiteDbSync.Server.Lib45.ViewModels
 
 
         public MainCatchUpWindowVM(SignalRServerToggleVM signalRServerToggleVM,
-                                   CommonLogListVM commonLogListVM)
+                                   CommonLogListVM commonLogListVM,
+                                   CatchUpWriterSettings catchUpWriterSettings)
         {
+            Config       = catchUpWriterSettings;
             CommonLogs   = commonLogListVM;
             ServerToggle = signalRServerToggleVM;
             ServerToggle.StartServerCmd.ExecuteIfItCan();
         }
 
 
+        public CatchUpWriterSettings  Config        { get; }
         public SignalRServerToggleVM  ServerToggle  { get; }
         public CommonLogListVM        CommonLogs    { get; }
     }

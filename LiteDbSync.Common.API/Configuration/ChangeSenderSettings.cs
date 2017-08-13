@@ -14,8 +14,8 @@ namespace LiteDbSync.Common.API.Configuration
         {
             return new ChangeSenderSettings
             {
-                ServerURL = "http://server.url.go:1234",
-                HubName   = "HubNameHere",
+                ServerURL = "http://localhost:1234",
+                HubName   = "ChangeReceiverHub",
                 WatchList = new List<DbWatcherSettings>
                 {
                     DbWatcherSettings.CreateDefault(),

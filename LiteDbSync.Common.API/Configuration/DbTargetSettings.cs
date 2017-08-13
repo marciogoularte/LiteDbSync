@@ -1,6 +1,8 @@
-﻿namespace LiteDbSync.Common.API.Configuration
+﻿using CommonTools.Lib.ns11.LiteDbTools;
+
+namespace LiteDbSync.Common.API.Configuration
 {
-    public class DbTargetSettings
+    public class DbTargetSettings : ILiteDbSettings
     {
         public string  DbFilePath      { get; set; }
         public string  UniqueDbName    { get; set; }

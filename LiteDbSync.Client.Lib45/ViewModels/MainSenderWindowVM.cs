@@ -13,25 +13,25 @@ namespace LiteDbSync.Client.Lib45.ViewModels
     {
         protected override string CaptionPrefix => "Change Sender";
 
-        private ChangeSenderSettings _cfg;
 
         public MainSenderWindowVM(ChangeSenderSettings changeSenderSettings) : base()
         {
-            _cfg = changeSenderSettings;
+            Config = changeSenderSettings;
 
             WatchAllCmd = R2Command.Relay(StartWatchingAll);
             WatchAllCmd.ExecuteIfItCan();
         }
 
 
-        public IR2Command  WatchAllCmd  { get; }
+        public ChangeSenderSettings  Config       { get; }
+        public IR2Command            WatchAllCmd  { get; }
 
         public ObservableCollection<SoloFileWatcherVM> WatchList { get; } = new ObservableCollection<SoloFileWatcherVM>();
 
 
         public void ResolveInternals(ILifetimeScope scope)
         {
-            foreach (var watchedFile in _cfg.WatchList)
+            foreach (var watchedFile in Config.WatchList)
             {
                 var soloWatchr = scope.Resolve<SoloFileWatcherVM>();
                 soloWatchr.SetTarget(watchedFile);

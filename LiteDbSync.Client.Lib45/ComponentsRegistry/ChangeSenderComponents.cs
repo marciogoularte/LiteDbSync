@@ -45,7 +45,7 @@ namespace LiteDbSync.Client.Lib45.ComponentsRegistry
 
         private static void SetDataTemplates(Application app)
         {
-            app.SetTemplate<SoloFileWatcherVM, SoloFileWatcherUI>();
+            app?.SetTemplate<SoloFileWatcherVM, SoloFileWatcherUI>();
         }
 
 

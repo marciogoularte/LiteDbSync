@@ -54,6 +54,7 @@
     <Reference Include="Moq, Version=4.7.99.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.7.99\lib\net45\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -76,7 +77,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AcceptanceTests\AppendOnlyDbSyncFacts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SampleDbWriters\LiteDbClient1.cs" />
     <Compile Include="SutExtensions\LdbFilewatcherExtensions.cs" />
     <Compile Include="SutExtensions\MoqExtensions.cs" />
     <Compile Include="TaskThreadTools\RunIfIdleThrottlerFacts.cs" />
@@ -101,6 +104,14 @@
     <ProjectReference Include="..\LiteDbSync.Common.API\LiteDbSync.Common.API.csproj">
       <Project>{6a835655-c426-4d7b-bd98-9ffa93221a60}</Project>
       <Name>LiteDbSync.Common.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LiteDbSync.Server.Lib45\LiteDbSync.Server.Lib45.csproj">
+      <Project>{a9a69a2d-b27f-4866-bcb2-4936796e979d}</Project>
+      <Name>LiteDbSync.Server.Lib45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SampleClient.Writer\SampleClient.Writer.csproj">
+      <Project>{1b7f3c11-99a1-47c0-95ef-65f7b2f40d50}</Project>
+      <Name>SampleClient.Writer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
