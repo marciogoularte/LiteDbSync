@@ -12,11 +12,6 @@ namespace LiteDbSync.Tests.AcceptanceTests
     [Trait("AppendOnly", "Acceptance")]
     public class AppendOnlyDbSyncFacts
     {
-        const string DB_NAME = "TestDB";
-
-        private ILifetimeScope _recvrScope;
-
-
         [Fact(DisplayName = "Syncs 1 record")]
         public async Task Syncs1record()
         {
@@ -25,18 +20,19 @@ namespace LiteDbSync.Tests.AcceptanceTests
             var srcDB = new LiteDbClient1(srcCfg);
             var trgDB = new LiteDbClient1(targCfg);
 
+            await Task.Delay(1000 * 2);
             srcDB.Insert("sample record text");
             var srcId = srcDB.GetLatestId();
 
-            await Task.Delay(1000 * 3);
+            await Task.Delay(1000 * 2);
             var targId = trgDB.GetLatestId();
             targId.Should().Be(srcId);
 
             var rec = trgDB.GetById(targId);
             rec.Text1.Should().Be("sample record text");
 
-            sendr.Close();
-            recvr.Close();
+            sendr.CloseMainWindow();
+            recvr.CloseMainWindow();
         }
 
 
