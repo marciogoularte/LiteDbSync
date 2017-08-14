@@ -11,7 +11,7 @@ namespace LiteDbSync.Client.Lib45.ChangeSenders
 {
     public class ChangeSender1 : IChangeSender, INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         private SynchronizationContext _ui;
         private ILocalDbReader         _local;
