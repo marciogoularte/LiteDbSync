@@ -9,7 +9,6 @@ using LiteDbSync.Common.API.Configuration;
 using LiteDbSync.Common.API.ServiceContracts;
 using LiteDbSync.Server.Lib45.Configuration;
 using LiteDbSync.Server.Lib45.DatabaseWriters;
-using LiteDbSync.Server.Lib45.SignalRHubs;
 using LiteDbSync.Server.Lib45.ViewModels;
 using Microsoft.AspNet.SignalR;
 using System;
@@ -25,8 +24,6 @@ namespace LiteDbSync.Server.Lib45.ComponentsRegistry
             SetDataTemplates(app);
 
             var b   = new ContainerBuilder();
-            b.RegisterHubs(Assembly.GetExecutingAssembly());
-
             var cfg = CatchUpWriterCfgFile.LoadOrDefault();
             b.RegisterInstance<CatchUpWriterSettings>(cfg)
                             .As<ISignalRServerSettings>()
@@ -39,8 +36,7 @@ namespace LiteDbSync.Server.Lib45.ComponentsRegistry
 
             b.Multi<ILocalDbWriter, LocalDbWriter1>();
 
-            //b.RegisterHubs(Assembly.GetExecutingAssembly());
-            b.RegisterType<ChangeReceiverHub1>();
+            b.RegisterHubs(Assembly.GetExecutingAssembly());
 
             var scope  = b.Build().BeginLifetimeScope();
             var webApp = scope.Resolve<ISignalRWebApp>();
@@ -52,7 +48,7 @@ namespace LiteDbSync.Server.Lib45.ComponentsRegistry
 
         private static void SetDataTemplates(Application app)
         {
-            //app.SetTemplate<SoloFileWatcherVM, SoloFileWatcherUI>();
+            //app?.SetTemplate<SoloFileWatcherVM, SoloFileWatcherUI>();
         }
 
 

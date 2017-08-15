@@ -18,8 +18,8 @@
                     Content="Stop server"
                     />
         </StackPanel>
-        <ListBox ItemsSource="{Binding List}"
-                 DataContext="{Binding CommonLogs}"
+        <ListBox DataContext="{Binding CommonLogs}"
+                 ItemsSource="{Binding List}"
                  />
     </DockPanel>
 </Window>

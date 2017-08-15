@@ -22,8 +22,9 @@ namespace LiteDbSync.Client.Lib45.ComponentsRegistry
     {
         private static ILifetimeScope BuildAndBeginScope(Application app)
         {
-            var b   = new ContainerBuilder();
+            SetDataTemplates(app);
 
+            var b   = new ContainerBuilder();
             var cfg = ChangeSenderCfgFile.LoadOrDefault();
             b.RegisterInstance<ChangeSenderSettings>(cfg)
                             .As<IHubClientSettings>()
@@ -36,8 +37,6 @@ namespace LiteDbSync.Client.Lib45.ComponentsRegistry
             b.Multi <ILocalDbReader, LocalDbReader1>();
             b.Multi <IChangeSender, ChangeSender1>();
             b.Multi <IChangeReceiver, ChangeReceiverClientProxy1>();
-
-            SetDataTemplates(app);
 
             return b.Build().BeginLifetimeScope();
         }

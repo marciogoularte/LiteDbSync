@@ -38,17 +38,17 @@ namespace LiteDbSync.Tests.AcceptanceTests
 
         private Process StartSenderProcess(out DbWatcherSettings watcherSettings)
         {
-            var cfg  = JsonFile.Read<ChangeSenderSettings>(@"..\..\..\LiteDbSync.ChangeSender.WPF\bin\Release\ChangeSender.cfg");
+            var cfg  = JsonFile.Read<ChangeSenderSettings>("ChangeSender.cfg");
             watcherSettings = cfg.WatchList[0];
-            return Process.Start(@"..\..\..\LiteDbSync.ChangeSender.WPF\bin\Release\ChangeSender.exe");
+            return Process.Start(@"..\..\..\LiteDbSync.ChangeSender.WPF\bin\Debug\ChangeSender.exe");
         }
 
 
         private Process StartReceiverProcess(out DbTargetSettings targetSettings)
         {
-            var cfg = JsonFile.Read<CatchUpWriterSettings>(@"..\..\..\LiteDbSync.CatchUpWriter.WPF\bin\Release\CatchUpWriter.cfg");
+            var cfg = JsonFile.Read<CatchUpWriterSettings>("CatchUpWriter.cfg");
             targetSettings = cfg.Targets[0];
-            return Process.Start(@"..\..\..\LiteDbSync.CatchUpWriter.WPF\bin\Release\CatchUpWriter.exe");
+            return Process.Start(@"..\..\..\LiteDbSync.CatchUpWriter.WPF\bin\Debug\CatchUpWriter.exe");
         }
     }
 }
